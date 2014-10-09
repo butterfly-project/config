@@ -1,0 +1,8 @@
+{
+    "__import": [
+        "routing/imp_routing.php"
+    ],
+    "route1": "route1value",
+    "route2": "route2value",
+    "routeSection": "&routing/inc_routing.php"
+}

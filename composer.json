@@ -1,0 +1,27 @@
+{
+    "name": "butterfly/config",
+    "type": "library",
+    "description": "Butterfly. PHP Configuration Component",
+    "keywords": ["DI", "Configuration"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marat Fakhertdinov",
+            "email": "marat.fakhertdinov@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/yaml": "v2.3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Butterfly\\Component\\Config\\": "src/",
+            "Butterfly\\Component\\Config\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev"
+}

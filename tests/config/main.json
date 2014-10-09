@@ -1,0 +1,10 @@
+{
+    "env": "main",
+    "parameter": "value",
+    "routes": "&routing.json",
+    "p1": ["v1", "v2"],
+    "p2": {
+        "p21": "v21",
+        "p22": "v22"
+    }
+}
