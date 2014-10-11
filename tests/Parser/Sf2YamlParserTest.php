@@ -4,6 +4,9 @@ namespace Butterfly\Component\Config\Tests\Parser;
 
 use Butterfly\Component\Config\Parser\Sf2YamlParser;
 
+/**
+ * @author Marat Fakhertdinov <marat.fakhertdinov@gmail.com>
+ */
 class Sf2YamlParserTest extends \PHPUnit_Framework_TestCase
 {
     /**

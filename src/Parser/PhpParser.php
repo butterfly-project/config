@@ -2,6 +2,9 @@
 
 namespace Butterfly\Component\Config\Parser;
 
+/**
+ * @author Marat Fakhertdinov <marat.fakhertdinov@gmail.com>
+ */
 class PhpParser implements IFileSupportedParser
 {
     const SUPPORTED_FILE_EXTENSION = 'php';

@@ -4,6 +4,9 @@ namespace Butterfly\Component\Config\Tests\Parser;
 
 use Butterfly\Component\Config\Parser\JsonParser;
 
+/**
+ * @author Marat Fakhertdinov <marat.fakhertdinov@gmail.com>
+ */
 class JsonParserTest extends \PHPUnit_Framework_TestCase
 {
     /**

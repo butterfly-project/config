@@ -4,6 +4,9 @@ namespace Butterfly\Component\Config\Tests\Parser;
 
 use Butterfly\Component\Config\Parser\PhpParser;
 
+/**
+ * @author Marat Fakhertdinov <marat.fakhertdinov@gmail.com>
+ */
 class PhpParserTest extends \PHPUnit_Framework_TestCase
 {
     /**
