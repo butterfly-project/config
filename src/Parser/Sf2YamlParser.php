@@ -4,6 +4,9 @@ namespace Butterfly\Component\Config\Parser;
 
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * @author Marat Fakhertdinov <marat.fakhertdinov@gmail.com>
+ */
 class Sf2YamlParser implements IFileSupportedParser
 {
     const SUPPORTED_FILE_EXTENSION = 'yml';

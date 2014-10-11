@@ -4,6 +4,9 @@ namespace Butterfly\Component\Config;
 
 use Butterfly\Component\Config\Parser\IParser;
 
+/**
+ * @author Marat Fakhertdinov <marat.fakhertdinov@gmail.com>
+ */
 class ConfigBuilder
 {
     const INCLUDE_PATH_SYMBOL = '&';

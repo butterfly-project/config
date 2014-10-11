@@ -8,6 +8,9 @@ use Butterfly\Component\Config\Parser\IParser;
 use Butterfly\Component\Config\Parser\JsonParser;
 use Butterfly\Component\Config\Parser\PhpParser;
 
+/**
+ * @author Marat Fakhertdinov <marat.fakhertdinov@gmail.com>
+ */
 class ConfigBuilderTest extends \PHPUnit_Framework_TestCase
 {
     public function testParse()
