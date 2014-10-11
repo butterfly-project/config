@@ -4,11 +4,11 @@ return array(
     'services' => array(
         'butterfly.config.builder'     => array(
             'class'     => 'Butterfly\Component\Config\ConfigBuilder',
-            'arguments' => '@butterfly.config.parser'
+            'arguments' => array('@butterfly.config.parser')
         ),
         'butterfly.config.parser'      => array(
             'class'     => 'Butterfly\Component\Config\Parser\DelegatedParser',
-            'arguments' => '#butterfly.config.parsers'
+            'arguments' => array('#butterfly.config.parsers')
         ),
         'butterfly.config.php_parser'  => array(
             'class' => 'Butterfly\Component\Config\Parser\PhpParser',
