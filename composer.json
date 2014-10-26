@@ -1,7 +1,7 @@
 {
     "name": "butterfly/config",
     "type": "library",
-    "description": "Butterfly. PHP Configuration Component",
+    "description": "Butterfly PHP. Configuration Component",
     "keywords": ["DI", "Configuration"],
     "license": "MIT",
     "authors": [

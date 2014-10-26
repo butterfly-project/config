@@ -1,4 +1,4 @@
 config
 ======
 
-Butterfly. PHP Configuration Component
+Butterfly PHP. Configuration Component
