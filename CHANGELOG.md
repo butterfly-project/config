@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+1.0.2
+-----
+
+Changes:
+
+ * Update yaml parser to version 2.6.*
+
 1.0.1
 -----
 
