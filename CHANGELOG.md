@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+1.1.0
+-----
+
+Changes:
+
+ * Added factory method of ConfigBuilder
+
 1.0.2
 -----
 
