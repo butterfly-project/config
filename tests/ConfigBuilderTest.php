@@ -75,4 +75,11 @@ class ConfigBuilderTest extends \PHPUnit_Framework_TestCase
     {
         return $this->getMock('\Butterfly\Component\Config\Parser\IParser');
     }
+
+    public function testCreateInstance()
+    {
+        $builder = ConfigBuilder::createInstance();
+
+        $this->assertInstanceOf('\Butterfly\Component\Config\ConfigBuilder', $builder);
+    }
 }

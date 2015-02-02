@@ -2,7 +2,11 @@
 
 namespace Butterfly\Component\Config;
 
+use Butterfly\Component\Config\Parser\DelegatedParser;
 use Butterfly\Component\Config\Parser\IParser;
+use Butterfly\Component\Config\Parser\JsonParser;
+use Butterfly\Component\Config\Parser\PhpParser;
+use Butterfly\Component\Config\Parser\Sf2YamlParser;
 
 /**
  * @author Marat Fakhertdinov <marat.fakhertdinov@gmail.com>
@@ -20,6 +24,20 @@ class ConfigBuilder
      * @var array
      */
     protected $data = array();
+
+    /**
+     * @return static
+     */
+    public static function createInstance()
+    {
+        $parser = new DelegatedParser(array(
+            new PhpParser(),
+            new JsonParser(),
+            new Sf2YamlParser(),
+        ));
+
+        return new static($parser);
+    }
 
     /**
      * @param IParser $parser
