@@ -1,10 +1,17 @@
 CHANGELOG
 =========
 
+1.1.1
+-----
+
+Added functionality:
+
+ * Add method addPaths in ConfigBuilder 
+
 1.1.0
 -----
 
-Changes:
+Added functionality:
 
  * Added factory method of ConfigBuilder
 
@@ -18,14 +25,14 @@ Changes:
 1.0.1
 -----
 
-Changes:
+Added functionality:
 
  * Added compiled di config
 
 1.0.0
 -----
 
-Changes:
+Added functionality:
 
  * Create di configuration
  * Added php docs for author
