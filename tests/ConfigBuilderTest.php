@@ -13,6 +13,34 @@ use Butterfly\Component\Config\Parser\PhpParser;
  */
 class ConfigBuilderTest extends \PHPUnit_Framework_TestCase
 {
+    protected $expectedConfig = array(
+        'env'       => 'dev',
+        'parameter' => 'value',
+        'routes'    => array(
+            'route1'        => 'route1value',
+            'route2'        => 'route2value',
+            'routeSection'  => array(
+                'route1' => 'value1',
+                'route2' => 'value2',
+                'value'  => '123',
+            ),
+            'route3'        => 'value3',
+            'route4'        => 'value4',
+            'routeSection2' => array(
+                'route1' => 'value1',
+                'route2' => 'value2',
+                'value'  => '123',
+            ),
+        ),
+        'developer' => 'user1',
+        'p1' => array('v3', 'v4'),
+        'p2' => array(
+            'p21' => 'v21_new',
+            'p22' => 'v22',
+            'p23' => 'v23',
+        ),
+    );
+
     public function testParse()
     {
         $parser = new DelegatedParser(array(
@@ -25,35 +53,7 @@ class ConfigBuilderTest extends \PHPUnit_Framework_TestCase
         $configBuilder->addPath(__DIR__ . '/config/dev.php');
         $configBuilder->addPath(__DIR__ . '/config/main2.json');
 
-        $expected = array(
-            'env'       => 'dev',
-            'parameter' => 'value',
-            'routes'    => array(
-                'route1'        => 'route1value',
-                'route2'        => 'route2value',
-                'routeSection'  => array(
-                    'route1' => 'value1',
-                    'route2' => 'value2',
-                    'value'  => '123',
-                ),
-                'route3'        => 'value3',
-                'route4'        => 'value4',
-                'routeSection2' => array(
-                    'route1' => 'value1',
-                    'route2' => 'value2',
-                    'value'  => '123',
-                ),
-            ),
-            'developer' => 'user1',
-            'p1' => array('v3', 'v4'),
-            'p2' => array(
-                'p21' => 'v21_new',
-                'p22' => 'v22',
-                'p23' => 'v23',
-            ),
-        );
-
-        $this->assertEquals($expected, $configBuilder->getData());
+        $this->assertEquals($this->expectedConfig, $configBuilder->getData());
     }
 
     /**
@@ -66,6 +66,23 @@ class ConfigBuilderTest extends \PHPUnit_Framework_TestCase
 
         $builder->addPath('unreadable_file.php');
         $builder->getData();
+    }
+
+    public function testAddPaths()
+    {
+        $parser = new DelegatedParser(array(
+            new JsonParser(),
+            new PhpParser()
+        ));
+
+        $configBuilder = new ConfigBuilder($parser);
+
+        $configBuilder->addPaths(array(
+            __DIR__ . '/config/dev.php',
+            __DIR__ . '/config/main2.json'
+        ));
+
+        $this->assertEquals($this->expectedConfig, $configBuilder->getData());
     }
 
     /**

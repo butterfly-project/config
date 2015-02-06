@@ -48,6 +48,17 @@ class ConfigBuilder
     }
 
     /**
+     * @param array $paths
+     * @throws \RuntimeException if file is not readable
+     */
+    public function addPaths(array $paths)
+    {
+        foreach ($paths as $path) {
+            $this->addPath($path);
+        }
+    }
+
+    /**
      * @param string $path
      * @throws \RuntimeException if file is not readable
      */
