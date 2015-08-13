@@ -1,12 +1,19 @@
 CHANGELOG
 =========
 
+1.1.2
+-----
+
+Added functionality:
+
+ * Update Sf2 Yaml Component
+
 1.1.1
 -----
 
 Added functionality:
 
- * Add method addPaths in ConfigBuilder 
+ * Add method addPaths in ConfigBuilder
 
 1.1.0
 -----
