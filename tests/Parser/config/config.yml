@@ -32,10 +32,10 @@ services:
   from_static_factory:
     factoryStaticMethod: ['Me\Factory', 'create']
     preTriggers:
-      - service: @bar
+      - service: '@bar'
         method:  beforeCreate
         arguments: ['value1']
     postTriggers:
-      - service: @bar
+      - service: '@bar'
         method:  afterCreate
         arguments: ['value2']

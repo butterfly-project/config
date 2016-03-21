@@ -6,7 +6,7 @@ use Butterfly\Component\Config\Parser\DelegatedParser;
 use Butterfly\Component\Config\Parser\IParser;
 use Butterfly\Component\Config\Parser\JsonParser;
 use Butterfly\Component\Config\Parser\PhpParser;
-use Butterfly\Component\Config\Parser\Sf2YamlParser;
+use Butterfly\Component\Config\Parser\SfYamlParser;
 
 /**
  * @author Marat Fakhertdinov <marat.fakhertdinov@gmail.com>
@@ -33,7 +33,7 @@ class ConfigBuilder
         $parser = new DelegatedParser(array(
             new PhpParser(),
             new JsonParser(),
-            new Sf2YamlParser(),
+            new SfYamlParser(),
         ));
 
         return new static($parser);
