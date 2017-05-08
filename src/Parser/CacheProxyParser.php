@@ -5,7 +5,7 @@ namespace Butterfly\Component\Config\Parser;
 /**
  * @author Marat Fakhertdinov <marat.fakhertdinov@gmail.com>
  */
-class CacheParserProxy implements IParser
+class CacheProxyParser implements IParser
 {
     /**
      * @var IParser
@@ -16,6 +16,11 @@ class CacheParserProxy implements IParser
      * @var array
      */
     protected $cache;
+
+    /**
+     * @var bool
+     */
+    protected $hasChanges = false;
 
     /**
      * @param IParser $parser
@@ -37,6 +42,7 @@ class CacheParserProxy implements IParser
         $mtime = filemtime($file);
 
         if (!array_key_exists($file, $this->cache) || $mtime != $this->cache[$file]['mtime']) {
+            $this->hasChanges = true;
             $this->cache[$file] = array(
                 'mtime' => filemtime($file),
                 'data'  => $this->parser->parse($file),
@@ -52,5 +58,13 @@ class CacheParserProxy implements IParser
     public function getCache()
     {
         return $this->cache;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasChanges()
+    {
+        return $this->hasChanges;
     }
 }
