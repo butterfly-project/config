@@ -2,7 +2,7 @@
 
 namespace Butterfly\Component\Config;
 
-use Butterfly\Component\Config\Parser\CacheParserProxy;
+use Butterfly\Component\Config\Parser\CacheProxyParser;
 use Butterfly\Component\Config\Parser\DelegatedParser;
 use Butterfly\Component\Config\Parser\IParser;
 use Butterfly\Component\Config\Parser\JsonParser;
@@ -46,7 +46,7 @@ class ConfigBuilder
             new SfYamlParser(),
         ));
 
-        $parser = new CacheParserProxy($parser, $cache);
+        $parser = new CacheProxyParser($parser, $cache);
 
         return new static($parser, $options);
     }
