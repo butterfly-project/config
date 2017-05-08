@@ -2,6 +2,7 @@
 
 namespace Butterfly\Component\Config;
 
+use Butterfly\Component\Config\Parser\CacheParserProxy;
 use Butterfly\Component\Config\Parser\DelegatedParser;
 use Butterfly\Component\Config\Parser\IParser;
 use Butterfly\Component\Config\Parser\JsonParser;
@@ -33,16 +34,19 @@ class ConfigBuilder
     protected $data = array();
 
     /**
+     * @param array $cache
      * @param int $options
      * @return static
      */
-    public static function createInstance($options = 0)
+    public static function createInstance(array $cache = array(), $options = 0)
     {
         $parser = new DelegatedParser(array(
             new PhpParser(),
             new JsonParser(),
             new SfYamlParser(),
         ));
+
+        $parser = new CacheParserProxy($parser, $cache);
 
         return new static($parser, $options);
     }
@@ -91,6 +95,14 @@ class ConfigBuilder
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * @return IParser
+     */
+    public function getParser()
+    {
+        return $this->parser;
     }
 
     /**
