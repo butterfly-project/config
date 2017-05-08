@@ -56,13 +56,23 @@ class ConfigBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->expectedConfig, $configBuilder->getData());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testParseIfFileIsNotReadable()
     {
         $parser = $this->getParser();
         $builder = new ConfigBuilder($parser);
+
+        $builder->addPath('unreadable_file.php');
+
+        $this->assertEquals(array(), $builder->getData());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testParseIfFileIsNotReadableIfNotIgnoreErrors()
+    {
+        $parser = $this->getParser();
+        $builder = new ConfigBuilder($parser, ConfigBuilder::NOT_IGNORE_UNREADABLE_FILES);
 
         $builder->addPath('unreadable_file.php');
         $builder->getData();

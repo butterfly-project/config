@@ -13,6 +13,8 @@ use Butterfly\Component\Config\Parser\SfYamlParser;
  */
 class ConfigBuilder
 {
+    const NOT_IGNORE_UNREADABLE_FILES = 1;
+
     const INCLUDE_PATH_SYMBOL = '&';
 
     /**
@@ -21,14 +23,20 @@ class ConfigBuilder
     protected $parser;
 
     /**
+     * @var bool
+     */
+    protected $ignoreUnreadableFiles;
+
+    /**
      * @var array
      */
     protected $data = array();
 
     /**
+     * @param int $options
      * @return static
      */
-    public static function createInstance()
+    public static function createInstance($options = 0)
     {
         $parser = new DelegatedParser(array(
             new PhpParser(),
@@ -36,15 +44,17 @@ class ConfigBuilder
             new SfYamlParser(),
         ));
 
-        return new static($parser);
+        return new static($parser, $options);
     }
 
     /**
      * @param IParser $parser
+     * @param int $options
      */
-    public function __construct(IParser $parser)
+    public function __construct(IParser $parser, $options = 0)
     {
-        $this->parser = $parser;
+        $this->parser                = $parser;
+        $this->ignoreUnreadableFiles = !($options & self::NOT_IGNORE_UNREADABLE_FILES);
     }
 
     /**
@@ -90,18 +100,22 @@ class ConfigBuilder
      */
     protected function parse($path)
     {
-        if (!is_readable($path)) {
-            throw new \InvalidArgumentException(sprintf("File %s is not readable", $path));
+        if (is_readable($path)) {
+            $baseDir = pathinfo($path, PATHINFO_DIRNAME);
+
+            $data = $this->parser->parse($path);
+            $data = $this->resolveImports($data, $baseDir);
+            $data = $this->recursiveResolveIncludes($data, $baseDir);
+            $data = $this->resolveExtends($data, $baseDir);
+
+            return $data;
         }
 
-        $baseDir = pathinfo($path, PATHINFO_DIRNAME);
+        if ($this->ignoreUnreadableFiles) {
+            return array();
+        }
 
-        $data = $this->parser->parse($path);
-        $data = $this->resolveImports($data, $baseDir);
-        $data = $this->recursiveResolveIncludes($data, $baseDir);
-        $data = $this->resolveExtends($data, $baseDir);
-
-        return $data;
+        throw new \InvalidArgumentException(sprintf("File %s is not readable", $path));
     }
 
     /**
