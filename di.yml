@@ -1,20 +1,20 @@
 services:
   butterfly.config.builder:
     class: 'Butterfly\Component\Config\ConfigBuilder'
-    arguments: [@butterfly.config.parser]
+    arguments: ['@butterfly.config.parser']
 
   butterfly.config.parser:
     class: 'Butterfly\Component\Config\Parser\DelegatedParser'
-    arguments: [#butterfly.config.parsers]
+    arguments: ['#butterfly.config.parsers']
 
   butterfly.config.php_parser:
     class: 'Butterfly\Component\Config\Parser\PhpParser'
-    tags: butterfly.config.parsers
+    tags: 'butterfly.config.parsers'
 
   butterfly.config.json_parser:
     class: 'Butterfly\Component\Config\Parser\JsonParser'
-    tags: butterfly.config.parsers
+    tags: 'butterfly.config.parsers'
 
   butterfly.config.yaml_parser:
     class: 'Butterfly\Component\Config\Parser\Sf2YamlParser'
-    tags: butterfly.config.parsers
+    tags: 'butterfly.config.parsers'

@@ -2,12 +2,12 @@
 
 namespace Butterfly\Component\Config\Tests\Parser;
 
-use Butterfly\Component\Config\Parser\Sf2YamlParser;
+use Butterfly\Component\Config\Parser\SfYamlParser;
 
 /**
  * @author Marat Fakhertdinov <marat.fakhertdinov@gmail.com>
  */
-class Sf2YamlParserTest extends \PHPUnit_Framework_TestCase
+class SfYamlParserTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var string
@@ -21,7 +21,7 @@ class Sf2YamlParserTest extends \PHPUnit_Framework_TestCase
 
     public function testIsSupport()
     {
-        $parser = new Sf2YamlParser();
+        $parser = new SfYamlParser();
 
         $this->assertTrue($parser->isSupport($this->dir . '/config.yml'));
         $this->assertFalse($parser->isSupport($this->dir . '/config.json'));
@@ -32,7 +32,7 @@ class Sf2YamlParserTest extends \PHPUnit_Framework_TestCase
         $configPath     = $this->dir . '/config.yml';
         $expectedConfig = require $this->dir . '/expectedConfig.php';
 
-        $parser = new Sf2YamlParser();
+        $parser = new SfYamlParser();
 
         $this->assertEquals($expectedConfig, $parser->parse($configPath));
     }
@@ -42,14 +42,14 @@ class Sf2YamlParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseIfNotSupport()
     {
-        $parser = new Sf2YamlParser();
+        $parser = new SfYamlParser();
 
         $parser->parse($this->dir . '/config.json');
     }
 
     public function testParseIfEmptyFile()
     {
-        $parser = new Sf2YamlParser();
+        $parser = new SfYamlParser();
 
         $this->assertEquals(array(), $parser->parse($this->dir . '/config_empty.yml'));
     }

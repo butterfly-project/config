@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+1.2.0
+-----
+
+Added functionality:
+
+ * Ignore unreadable files
+ * Parser cache
+
 1.1.2
 -----
 

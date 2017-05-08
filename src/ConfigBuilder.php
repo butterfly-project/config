@@ -2,17 +2,20 @@
 
 namespace Butterfly\Component\Config;
 
+use Butterfly\Component\Config\Parser\CacheParserProxy;
 use Butterfly\Component\Config\Parser\DelegatedParser;
 use Butterfly\Component\Config\Parser\IParser;
 use Butterfly\Component\Config\Parser\JsonParser;
 use Butterfly\Component\Config\Parser\PhpParser;
-use Butterfly\Component\Config\Parser\Sf2YamlParser;
+use Butterfly\Component\Config\Parser\SfYamlParser;
 
 /**
  * @author Marat Fakhertdinov <marat.fakhertdinov@gmail.com>
  */
 class ConfigBuilder
 {
+    const NOT_IGNORE_UNREADABLE_FILES = 1;
+
     const INCLUDE_PATH_SYMBOL = '&';
 
     /**
@@ -21,30 +24,41 @@ class ConfigBuilder
     protected $parser;
 
     /**
+     * @var bool
+     */
+    protected $ignoreUnreadableFiles;
+
+    /**
      * @var array
      */
     protected $data = array();
 
     /**
+     * @param array $cache
+     * @param int $options
      * @return static
      */
-    public static function createInstance()
+    public static function createInstance(array $cache = array(), $options = 0)
     {
         $parser = new DelegatedParser(array(
             new PhpParser(),
             new JsonParser(),
-            new Sf2YamlParser(),
+            new SfYamlParser(),
         ));
 
-        return new static($parser);
+        $parser = new CacheParserProxy($parser, $cache);
+
+        return new static($parser, $options);
     }
 
     /**
      * @param IParser $parser
+     * @param int $options
      */
-    public function __construct(IParser $parser)
+    public function __construct(IParser $parser, $options = 0)
     {
-        $this->parser = $parser;
+        $this->parser                = $parser;
+        $this->ignoreUnreadableFiles = !($options & self::NOT_IGNORE_UNREADABLE_FILES);
     }
 
     /**
@@ -84,24 +98,36 @@ class ConfigBuilder
     }
 
     /**
+     * @return IParser
+     */
+    public function getParser()
+    {
+        return $this->parser;
+    }
+
+    /**
      * @param string $path
      * @return array
      * @throws \InvalidArgumentException if file is not readable
      */
     protected function parse($path)
     {
-        if (!is_readable($path)) {
-            throw new \InvalidArgumentException(sprintf("File %s is not readable", $path));
+        if (is_readable($path)) {
+            $baseDir = pathinfo($path, PATHINFO_DIRNAME);
+
+            $data = $this->parser->parse($path);
+            $data = $this->resolveImports($data, $baseDir);
+            $data = $this->recursiveResolveIncludes($data, $baseDir);
+            $data = $this->resolveExtends($data, $baseDir);
+
+            return $data;
         }
 
-        $baseDir = pathinfo($path, PATHINFO_DIRNAME);
+        if ($this->ignoreUnreadableFiles) {
+            return array();
+        }
 
-        $data = $this->parser->parse($path);
-        $data = $this->resolveImports($data, $baseDir);
-        $data = $this->recursiveResolveIncludes($data, $baseDir);
-        $data = $this->resolveExtends($data, $baseDir);
-
-        return $data;
+        throw new \InvalidArgumentException(sprintf("File %s is not readable", $path));
     }
 
     /**

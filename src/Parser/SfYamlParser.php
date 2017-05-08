@@ -7,7 +7,7 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * @author Marat Fakhertdinov <marat.fakhertdinov@gmail.com>
  */
-class Sf2YamlParser implements IFileSupportedParser
+class SfYamlParser implements IFileSupportedParser
 {
     const SUPPORTED_FILE_EXTENSION = 'yml';
 
@@ -22,7 +22,7 @@ class Sf2YamlParser implements IFileSupportedParser
             throw new \InvalidArgumentException(sprintf("This file format '%s' is not supported", $file));
         }
 
-        return (array)Yaml::parse($file);
+        return (array)Yaml::parse(file_get_contents($file));
     }
 
     /**
